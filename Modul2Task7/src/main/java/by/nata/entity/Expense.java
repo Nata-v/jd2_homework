@@ -11,7 +11,7 @@ public class Expense implements Serializable {
     private int receiverId;
     private double amount;
 
-    public Expense(String s, int i, double v) {
+    public Expense() {
     }
 
     public Expense(int id, String paymentDate, int receiverId, double amount) {
