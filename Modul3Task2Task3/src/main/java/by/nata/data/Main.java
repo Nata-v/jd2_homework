@@ -11,7 +11,7 @@ public class Main {
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             HibernateRun hibernateRun = new HibernateRun(sessionFactory);
 
-            // Вызываем методы для тестирования
+
             hibernateRun.save();
             Receivers receiver = hibernateRun.findById(1L);
             System.out.println("Receiver name: " + receiver.getName());

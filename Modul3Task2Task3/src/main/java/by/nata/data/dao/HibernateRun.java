@@ -92,10 +92,10 @@ public class HibernateRun implements Dao {
             transaction = session.beginTransaction();
 
             Expenses expensesDelete = session.get(Expenses.class, 5L);
-session.flush();
-if (expensesDelete == null){
-    throw new IllegalArgumentException("Expense with ID " + id + "not found");
-}
+            session.flush();
+            if (expensesDelete == null) {
+                throw new IllegalArgumentException("Expense with ID " + id + "not found");
+            }
 
 
             session.delete(expensesDelete);
