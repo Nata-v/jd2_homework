@@ -67,6 +67,7 @@ public class HibernateRun implements Dao {
             transaction.commit();
 
             return receiverLoaded;
+
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             throw new RuntimeException(e);
@@ -79,10 +80,7 @@ public class HibernateRun implements Dao {
 
     @Override
     public boolean delete(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("ID can't be null");
 
-        }
 
         Session session = null;
         Transaction transaction = null;
@@ -91,8 +89,8 @@ public class HibernateRun implements Dao {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
 
-            Expenses expensesDelete = session.get(Expenses.class, 5L);
-            session.flush();
+            Expenses expensesDelete = session.get(Expenses.class, 2L);
+
             if (expensesDelete == null) {
                 throw new IllegalArgumentException("Expense with ID " + id + "not found");
             }
@@ -188,12 +186,12 @@ public class HibernateRun implements Dao {
             expense = new Expenses(null, LocalDate.now(), new Receivers(null, "OMO"), 5000.00);
             session.save(expense);
             session.flush();
-
+            System.out.println(expense);
 
             Expenses expenseDelete = session.find(Expenses.class, expense.getId());
-
-            session.remove(expenseDelete);
+            session.delete(expenseDelete);
             session.flush();
+            System.out.println(expenseDelete);
 
             transaction.commit();
 

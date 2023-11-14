@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
@@ -41,8 +42,6 @@ public class HibernateRunTest {
             Session session = null;
             Transaction transaction = null;
 
-
-            try {
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
 
@@ -63,11 +62,6 @@ public class HibernateRunTest {
                 assertEquals("DANA-MOLL", expenses.getReceivers().getName());
                 assertEquals(3000.00, expenses.getAmount(), 0.001);
 
-            } catch (Exception e) {
-                if (transaction != null) transaction.rollback();
-                throw new RuntimeException(e);
-            }
-
 
         }
 
@@ -76,7 +70,7 @@ public class HibernateRunTest {
 
             Session session = null;
             Transaction transaction = null;
-            try {
+
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
                 Receivers receiverLoaded = session.get(Receivers.class, 1L);
@@ -84,11 +78,6 @@ public class HibernateRunTest {
                 transaction.commit();
                 assertNotNull(receiverLoaded);
                 assertEquals("MTC", receiverLoaded.getName());
-
-            } catch (Exception e) {
-                if (transaction != null) transaction.rollback();
-                throw new RuntimeException(e);
-            }
 
         }
 
@@ -99,7 +88,6 @@ public class HibernateRunTest {
             Session session = null;
             Transaction transaction = null;
 
-            try {
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
 
@@ -112,12 +100,6 @@ public class HibernateRunTest {
 
                 assertEquals(null, session.get(Expenses.class, 5L));
 
-            } catch (Exception e) {
-                if (transaction != null) transaction.rollback();
-                throw new RuntimeException(e);
-
-
-            }
         }
 
         @Test
@@ -125,8 +107,6 @@ public class HibernateRunTest {
             Session session = null;
             Transaction transaction = null;
 
-
-            try {
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
                 Receivers receiverLoaded = session.get(Receivers.class, 4L);
@@ -137,11 +117,6 @@ public class HibernateRunTest {
                 assertNotNull(receiverLoaded);
                 assertEquals("Telekom", receiverLoaded.getName());
 
-            } catch (Exception e) {
-                if (transaction != null) transaction.rollback();
-                throw new RuntimeException(e);
-
-            }
         }
 
         @Test
@@ -149,8 +124,6 @@ public class HibernateRunTest {
             Session session = null;
             Transaction transaction = null;
 
-
-            try {
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
 
@@ -164,12 +137,6 @@ public class HibernateRunTest {
                 assertNotNull(receiverLoaded);
                 assertEquals("MTC", receiverLoaded.getName());
 
-            } catch (Exception e) {
-                if (transaction != null) transaction.rollback();
-                throw new RuntimeException(e);
-
-            }
-
         }
 
 
@@ -178,7 +145,6 @@ public class HibernateRunTest {
             Session session = null;
             Transaction transaction = null;
 
-            try {
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
 
@@ -199,12 +165,6 @@ public class HibernateRunTest {
                 assertEquals("OMO", expense.getReceivers().getName());
                 assertEquals(5000.00, expense.getAmount(), 0.001);
 
-
-
-            } catch (Exception e) {
-                if (transaction != null) transaction.rollback();
-                throw new RuntimeException(e);
-            }
         }
 
 }
