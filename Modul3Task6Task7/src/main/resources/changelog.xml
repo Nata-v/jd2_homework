@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="1" author="nata">
+        <sql>
+            CREATE TABLE IF NOT EXISTS company (
+            id VARCHAR(256) NOT NULL PRIMARY KEY ,
+            name VARCHAR(256) NOT NULL,
+            created_date DATE NOT NULL
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="2" author="nata">
+        <sql>
+            CREATE TABLE IF NOT EXISTS employee (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            first_name VARCHAR(256) NOT NULL,
+            last_name VARCHAR(256) NOT NULL,
+            salary DECIMAL(10,2) NOT NULL,
+            company_id VARCHAR(256) NOT NULL,
+            FOREIGN KEY (company_id) REFERENCES company (id)
+            );
+        </sql>
+    </changeSet>
+
+<!--
+    <changeSet id="3" author="nata">
+        <sql>
+
+            insert into company (name, created_date) values ('TikTok', '2022-10-10');
+            insert into company (name, created_date) values ( 'Facebook', '2023-03-24');
+            insert into company (name, created_date) values ( 'Apple', '2021-01-10');
+            insert into company (name, created_date) values ( 'Netflix', '2024-03-10');
+        </sql>
+    </changeSet>
+    <changeSet id="4" author="nata">
+        <sql>
+
+            insert into employee (first_name, last_name, salary, company_id)
+            values ( 'Lev', 'Ivanov', 5000, 2);
+            insert into employee (first_name, last_name, salary, company_id)
+            values ('Tom', 'Tailor', 15000, 4);
+            insert into employee (first_name, last_name, salary, company_id)
+            values ('Ira', 'Ivanova', 500, 1);
+            insert into employee ( first_name, last_name, salary, company_id)
+            values ('Petr', 'Petrov', 1000, 3);
+
+        </sql>
+    </changeSet>-->
+
+</databaseChangeLog>
