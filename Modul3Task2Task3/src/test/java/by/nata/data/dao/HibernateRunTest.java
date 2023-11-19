@@ -18,13 +18,13 @@ import static org.junit.Assert.assertNotNull;
 
 public class HibernateRunTest {
         private static SessionFactory sessionFactory;
-
+        private Session session = null;
+        private Transaction transaction = null;
         @Before
         public void setUp() throws Exception {
 
             sessionFactory = HibernateUtilTest.getSessionFactory();
             sessionFactory.openSession();
-
 
         }
 
@@ -39,8 +39,7 @@ public class HibernateRunTest {
 
         @Test
         public void save() {
-            Session session = null;
-            Transaction transaction = null;
+
 
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
@@ -68,9 +67,6 @@ public class HibernateRunTest {
         @Test
         public void findById() {
 
-            Session session = null;
-            Transaction transaction = null;
-
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
                 Receivers receiverLoaded = session.get(Receivers.class, 1L);
@@ -84,9 +80,6 @@ public class HibernateRunTest {
 
         @Test
         public void delete() {
-
-            Session session = null;
-            Transaction transaction = null;
 
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
@@ -104,9 +97,6 @@ public class HibernateRunTest {
 
         @Test
         public void get() {
-            Session session = null;
-            Transaction transaction = null;
-
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
                 Receivers receiverLoaded = session.get(Receivers.class, 4L);
@@ -121,9 +111,6 @@ public class HibernateRunTest {
 
         @Test
         public void load() {
-            Session session = null;
-            Transaction transaction = null;
-
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
 
@@ -142,8 +129,6 @@ public class HibernateRunTest {
 
         @Test
         public void deleteExpense() {
-            Session session = null;
-            Transaction transaction = null;
 
                 session = sessionFactory.openSession();
                 transaction = session.beginTransaction();
