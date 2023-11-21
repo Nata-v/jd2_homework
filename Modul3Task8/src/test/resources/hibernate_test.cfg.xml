@@ -1,0 +1,23 @@
+<hibernate-configuration xmlns="http://www.hibernate.org/xsd/orm/cfg">
+    <session-factory>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/People_test</property>
+        <property name="hibernate.connection.username">user</property>
+        <property name="hibernate.connection.password">user</property>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+<!--        <property name="hibernate.hbm2ddl.auto">create</property>-->
+
+        <mapping class="by.nata.data.pojo.Employee"/>
+        <mapping class="by.nata.data.pojo.Person"/>
+        <mapping class="by.nata.data.pojo.Student"/>
+        <mapping class="by.nata.data.pojo.JoinedTablePerson"/>
+        <mapping class="by.nata.data.pojo.JoinedTableStudent"/>
+        <mapping class="by.nata.data.pojo.JoinedTableEmployee"/>
+        <mapping class="by.nata.data.pojo.SingleTablePerson"/>
+        <mapping class="by.nata.data.pojo.SingleTableStudent"/>
+        <mapping class="by.nata.data.pojo.SingleTableEmployee"/>
+    </session-factory>
+</hibernate-configuration>

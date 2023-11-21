@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+<!--    <changeSet id="1" author="nata">
+        <sql>
+            CREATE TABLE IF NOT EXISTS person_employee_student (
+            id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(128) NOT NULL,
+            surname VARCHAR(128) NOT NULL,
+            company VARCHAR(128),
+            salary DECIMAL(10,2),
+            faculty VARCHAR(50),
+            mark INT,
+            person_type CHAR(50)
+            );
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="2" author="nata">
+        <sql>
+            CREATE TABLE IF NOT EXISTS person_join (
+            id INT NOT NULL
+            PRIMARY KEY,
+            name VARCHAR(128) ,
+            surname VARCHAR(128)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="nata">
+        <sql>
+            CREATE TABLE IF NOT EXISTS student_join (
+            id INT PRIMARY KEY,
+            faculty VARCHAR(50) ,
+            mark DOUBLE
+            FOREIGN KEY (id)
+            REFERENCES person_join(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="nata">
+        <sql>
+            CREATE TABLE IF NOT EXISTS employee_join (
+            id INT PRIMARY KEY,
+            company VARCHAR(256) ,
+            salary DECIMAL(10,2)
+            FOREIGN KEY (id)
+            REFERENCES person_join(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="5" author="nata">
+        <sql>
+            CREATE TABLE IF NOT EXISTS person (
+            id int PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(128) ,
+            surname VARCHAR(128)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="6" author="nata">
+        <sql>
+            CREATE TABLE IF NOT EXISTS student (
+            id int PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(128) ,
+            surname VARCHAR(128) ,
+            faculty VARCHAR(50) ,
+            mark DOUBLE
+&lt;!&ndash;            FOREIGN KEY (id) REFERENCES person (id)&ndash;&gt;
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="7" author="nata">
+        <sql>
+            CREATE TABLE IF NOT EXISTS employee (
+            id int PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(128) ,
+            surname VARCHAR(128) ,
+            company VARCHAR(256) ,
+            salary DECIMAL(10,2)
+&lt;!&ndash;            FOREIGN KEY (id) REFERENCES person (id)&ndash;&gt;
+            );
+        </sql>
+    </changeSet>-->
+
+
+</databaseChangeLog>
