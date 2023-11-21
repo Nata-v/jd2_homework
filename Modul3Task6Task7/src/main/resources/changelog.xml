@@ -28,29 +28,5 @@
         </sql>
     </changeSet>
 
-<!--
-    <changeSet id="3" author="nata">
-        <sql>
-
-            insert into company (name, created_date) values ('TikTok', '2022-10-10');
-            insert into company (name, created_date) values ( 'Facebook', '2023-03-24');
-            insert into company (name, created_date) values ( 'Apple', '2021-01-10');
-            insert into company (name, created_date) values ( 'Netflix', '2024-03-10');
-        </sql>
-    </changeSet>
-    <changeSet id="4" author="nata">
-        <sql>
-
-            insert into employee (first_name, last_name, salary, company_id)
-            values ( 'Lev', 'Ivanov', 5000, 2);
-            insert into employee (first_name, last_name, salary, company_id)
-            values ('Tom', 'Tailor', 15000, 4);
-            insert into employee (first_name, last_name, salary, company_id)
-            values ('Ira', 'Ivanova', 500, 1);
-            insert into employee ( first_name, last_name, salary, company_id)
-            values ('Petr', 'Petrov', 1000, 3);
-
-        </sql>
-    </changeSet>-->
 
 </databaseChangeLog>

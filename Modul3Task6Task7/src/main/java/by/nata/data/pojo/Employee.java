@@ -10,31 +10,34 @@ import java.util.Objects;
 public class Employee implements Serializable {
     private static final long serialVersionUID = -8707674296698074317L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+    @Column(name = "first_name")
+    private String first_name;
+    @Column(name = "last_name")
+    private String last_name;
+    @Column(name = "salary")
+    private double salary;
 
-@Column(name = "first_name")
-private String first_name;
-@Column(name = "last_name")
-private String last_name;
-@Column(name = "salary")
-private double salary;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
+    private Company company;
 
-@ManyToOne(cascade = CascadeType.ALL)
-@JoinColumn(name = "company_id")
-private Company company;
+    @Embedded
+    private ContactEmployee contactEmployee;
 
 
     public Employee() {
     }
 
-    public Employee(Long id, String first_name, String last_name, double salary, Company company) {
+    public Employee(Long id, String first_name, String last_name, double salary, Company company, ContactEmployee contactEmployee) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.salary = salary;
         this.company = company;
+        this.contactEmployee = contactEmployee;
     }
 
     public Long getId() {
@@ -77,6 +80,14 @@ private Company company;
         this.company = company;
     }
 
+    public ContactEmployee getContactEmployee() {
+        return contactEmployee;
+    }
+
+    public void setContactEmployee(ContactEmployee contactEmployee) {
+        this.contactEmployee = contactEmployee;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -85,6 +96,7 @@ private Company company;
                 ", last_name='" + last_name + '\'' +
                 ", salary=" + salary +
                 ", company=" + company +
+                ", contactEmployee=" + contactEmployee +
                 '}';
     }
 
@@ -93,11 +105,11 @@ private Company company;
         if (this == o) return true;
         if (!(o instanceof Employee)) return false;
         Employee employee = (Employee) o;
-        return Double.compare(employee.getSalary(), getSalary()) == 0 && Objects.equals(getId(), employee.getId()) && Objects.equals(getFirst_name(), employee.getFirst_name()) && Objects.equals(getLast_name(), employee.getLast_name()) && Objects.equals(getCompany(), employee.getCompany());
+        return Double.compare(employee.getSalary(), getSalary()) == 0 && Objects.equals(getId(), employee.getId()) && Objects.equals(getFirst_name(), employee.getFirst_name()) && Objects.equals(getLast_name(), employee.getLast_name()) && Objects.equals(getCompany(), employee.getCompany()) && Objects.equals(getContactEmployee(), employee.getContactEmployee());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirst_name(), getLast_name(), getSalary(), getCompany());
+        return Objects.hash(getId(), getFirst_name(), getLast_name(), getSalary(), getCompany(), getContactEmployee());
     }
 }

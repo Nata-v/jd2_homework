@@ -2,9 +2,7 @@ package by.nata.data.dao;
 
 
 import by.nata.data.HibernateUtilTest;
-import by.nata.data.pojo.Company;
-import by.nata.data.pojo.CompanyAddress;
-import by.nata.data.pojo.Employee;
+import by.nata.data.pojo.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -16,6 +14,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,7 +22,8 @@ import static org.junit.Assert.assertNotNull;
 public class HibernateRunTest {
 
     private static SessionFactory sessionFactory;
-
+    private Session session = null;
+    private Transaction transaction = null;
 
     @Before
     public void setUp() throws Exception {
@@ -43,8 +43,7 @@ public class HibernateRunTest {
 
     @Test
     public void testSave() throws Exception {
-        Session session = null;
-        Transaction transaction = null;
+
 
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
@@ -65,7 +64,9 @@ public class HibernateRunTest {
 
 
         Employee employee = new Employee(null, "Natali", "Volkova", 5000.00,
-                new Company(null, "Google", LocalDate.now(), new CompanyAddress("London", "Yoll Street", "7777")));
+                new Company(null, "Google", LocalDate.now(),
+                        new CompanyAddress("London", "Yoll Street", "7777")),
+                new ContactEmployee("245-55-55", "Домашний"));
 
         session.saveOrUpdate(employee);
 
@@ -78,15 +79,11 @@ public class HibernateRunTest {
 
 
         transaction.commit();
-
-
-
     }
 
     @Test
     public void testFindAll() {
-        Session session = null;
-        Transaction transaction = null;
+
         List<Object> resultList = new ArrayList<>();
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();

@@ -1,8 +1,6 @@
 package by.nata.data.dao;
 
-import by.nata.data.pojo.Company;
-import by.nata.data.pojo.CompanyAddress;
-import by.nata.data.pojo.Employee;
+import by.nata.data.pojo.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,6 +8,7 @@ import org.hibernate.Transaction;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class HibernateRun implements Dao {
     private final SessionFactory sessionFactory;
@@ -23,6 +22,9 @@ public class HibernateRun implements Dao {
 
     @Override
     public void save(Object object) {
+        if (object == null) {
+            throw new IllegalArgumentException("Object can't be null");
+        }
         Session session = null;
         Transaction transaction = null;
 
@@ -31,13 +33,15 @@ public class HibernateRun implements Dao {
             transaction = session.beginTransaction();
 
             Company company = new Company(null, "Microsoft", LocalDate.of(2024, 05, 10),
-            new CompanyAddress("New York", "Rodeo Drive", "3030"));
+                    new CompanyAddress("New York", "Rodeo Drive", "3030"));
 
             session.saveOrUpdate(company);
 
             session.flush();
             Employee employee = new Employee(null, "Natali", "Volkova", 5000.00,
-                    new Company(null, "Google", LocalDate.now(), new CompanyAddress("London", "Yoll Street", "7777")));
+                    new Company(null, "Google", LocalDate.now(),
+                            new CompanyAddress("London", "Yoll Street", "7777")),
+                    new ContactEmployee("256-44-88", "Домашний"));
 
             session.saveOrUpdate(employee);
 
@@ -55,12 +59,11 @@ public class HibernateRun implements Dao {
     }
 
 
-
     @Override
-    public List<Object>findAll () {
+    public List<Object> findAll() {
         Session session = null;
         Transaction transaction = null;
-List<Object> resultList = new ArrayList<>();
+        List<Object> resultList = new ArrayList<>();
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();

@@ -11,5 +11,7 @@
 
         <mapping class="by.nata.data.pojo.Company"/>
         <mapping class="by.nata.data.pojo.Employee"/>
+
+
     </session-factory>
 </hibernate-configuration>
