@@ -105,5 +105,29 @@ public class HibernateRunTest {
         transaction.commit();
 
     }
+    @Test
+    public void getIdentifier(){
+        session = sessionFactory.openSession();
+        transaction = session.beginTransaction();
+
+        Product product = new Product(null, "MacBook", "15");
+        Product product2 = new Product(null, "iPhone", "15PRO");
+        Product product3 = new Product(null, "Airpods", "8");
+        session.saveOrUpdate(product);
+        session.saveOrUpdate(product2);
+        session.saveOrUpdate(product3);
+        session.flush();
+
+
+        Product getProduct = session.get(Product.class, product.getProductId());
+
+
+        session.flush();
+
+        assertNotNull(getProduct.getProductId());
+        assertEquals("MacBook", product.getName());
+        assertEquals("15", product.getModel());
+        transaction.commit();
+    }
 
 }

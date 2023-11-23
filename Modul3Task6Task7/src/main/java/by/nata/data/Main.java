@@ -1,6 +1,7 @@
 package by.nata.data;
 
 import by.nata.data.dao.HibernateRun;
+import by.nata.data.pojo.Product;
 import by.nata.data.util.HibernateUtil;
 import org.hibernate.SessionFactory;
 
@@ -15,6 +16,7 @@ public class Main {
             hibernateRun.save(new Object());
             hibernateRun.findAll();
 
+            hibernateRun.getIdentifier(new Product());
 
 
                    sessionFactory.close();

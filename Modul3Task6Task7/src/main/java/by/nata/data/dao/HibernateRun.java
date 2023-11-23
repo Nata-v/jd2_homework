@@ -1,6 +1,7 @@
 package by.nata.data.dao;
 
 import by.nata.data.pojo.*;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -18,6 +19,50 @@ public class HibernateRun implements Dao {
             throw new IllegalArgumentException("An argument sessionFactory cannot be null");
         }
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public Product getIdentifier(Product product)  {
+        if (product == null) {
+            throw new IllegalArgumentException("Product can't be null");
+        }
+        Session session = null;
+        Transaction transaction = null;
+
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+
+            product = new Product(null, "MacBook", "15");
+            Product product2 = new Product(null, "iPhone", "15PRO");
+            Product product3 = new Product(null, "Airpods", "8");
+            session.saveOrUpdate(product);
+            session.saveOrUpdate(product2);
+            session.saveOrUpdate(product3);
+            session.flush();
+
+
+            Product getProduct = session.get(Product.class, product.getProductId());
+            Product getProduct2 = session.get(Product.class, product2.getProductId());
+            Product getProduct3 = session.get(Product.class, product3.getProductId());
+
+
+            session.flush();
+            transaction.commit();
+            System.out.println(getProduct);
+            System.out.println(getProduct2);
+            System.out.println(getProduct3);
+
+            return getProduct;
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw new RuntimeException(e);
+
+        } finally {
+            if (session != null) session.close();
+        }
+
     }
 
     @Override

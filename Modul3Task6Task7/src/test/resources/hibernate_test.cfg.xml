@@ -11,6 +11,7 @@
 
         <mapping class="by.nata.data.pojo.Company"/>
         <mapping class="by.nata.data.pojo.Employee"/>
+        <mapping class="by.nata.data.pojo.Product"/>
 
 
     </session-factory>
