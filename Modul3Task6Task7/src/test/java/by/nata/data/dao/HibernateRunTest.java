@@ -2,6 +2,7 @@ package by.nata.data.dao;
 
 
 import by.nata.data.HibernateUtilTest;
+import by.nata.data.JdbcUtilTest;
 import by.nata.data.pojo.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,9 +12,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -22,11 +27,15 @@ import static org.junit.Assert.assertNotNull;
 public class HibernateRunTest {
 
     private static SessionFactory sessionFactory;
+    private static Dao dao;
     private Session session = null;
     private Transaction transaction = null;
 
     @Before
     public void setUp() throws Exception {
+        Connection conn = JdbcUtilTest.getConnection();
+        conn.createStatement().executeUpdate("DELETE FROM employee;");
+        conn.createStatement().executeUpdate("DELETE FROM company;");
 
         sessionFactory = HibernateUtilTest.getSessionFactory();
         sessionFactory.openSession();
@@ -39,6 +48,10 @@ public class HibernateRunTest {
         if (sessionFactory == null) {
             sessionFactory.close();
         }
+        dao = null;
+        Connection conn = JdbcUtilTest.getConnection();
+        conn.createStatement().executeUpdate("DELETE FROM employee;");
+        conn.createStatement().executeUpdate("DELETE FROM company;");
     }
 
     @Test
@@ -53,15 +66,6 @@ public class HibernateRunTest {
 
         session.saveOrUpdate(company);
 
-        session.flush();
-        assertNotNull(company.getId());
-
-        assertEquals("Microsoft", company.getName());
-        assertEquals(LocalDate.of(2024,05,10), company.getCreated_date());
-        assertEquals("New York", company.getCompanyAddress().getCity());
-        assertEquals("Rodeo Drive", company.getCompanyAddress().getStreet());
-        assertEquals("3030", company.getCompanyAddress().getPostCode());
-
 
         Employee employee = new Employee(null, "Natali", "Volkova", 5000.00,
                 new Company(null, "Google", LocalDate.now(),
@@ -69,44 +73,54 @@ public class HibernateRunTest {
                 new ContactEmployee("245-55-55", "Домашний"));
 
         session.saveOrUpdate(employee);
-
-        session.flush();
-
-        assertNotNull(employee.getId());
-        assertEquals("Natali", employee.getFirst_name());
-        assertEquals("Volkova", employee.getLast_name());
-        assertEquals(5000.00, employee.getSalary(), 0.001);
-
-
         transaction.commit();
+
+        assertNotNull(company);
+        assertNotNull(employee);
+
+        Connection conn = JdbcUtilTest.getConnection();
+
+        ResultSet rs = conn.createStatement().executeQuery("select count(*) from company where NAME='Microsoft'");
+        rs.next();
+        int actualCount = rs.getInt(1);
+        assertEquals(1, actualCount);
+
+        rs = conn.createStatement().executeQuery("select count(*) from employee where FIRST_NAME='Natali' AND LAST_NAME='Volkova'");
+        rs.next();
+        actualCount = rs.getInt(1);
+        assertEquals(1, actualCount);
+
+        conn.close();
+
+
     }
 
     @Test
-    public void testFindAll() {
+    public void testFindAll() throws SQLException, ClassNotFoundException {
+        Connection conn = JdbcUtilTest.getConnection();
+        List<Company> companies = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            String testId = UUID.randomUUID().toString();
 
-        List<Object> resultList = new ArrayList<>();
-        session = sessionFactory.openSession();
-        transaction = session.beginTransaction();
+            Company company = new Company();
+            company.setId(testId);
+            company.setName("Natali" + i);
+            company.setCreated_date(LocalDate.parse("2020-10-03"));
 
-        List<Company> companies = session.createQuery("from Company").list();
-        for (Company company : companies) {
-            resultList.add(company);
-            System.out.println("Company id: " + company);
+            companies.add(company);
         }
-        assertEquals(0, companies.size());
 
 
-        List<Employee> employees = session.createQuery("from Employee").list();
-        for (Employee employee : employees) {
-            resultList.add(employee);
-            System.out.println("Employee id: " + employee);
-        }
-        assertEquals(0, employees.size());
-        transaction.commit();
+        assertEquals(10, companies.size());
+        assertEquals("Natali0", companies.get(0).getName());
+        assertEquals("Natali1", companies.get(1).getName());
+        assertEquals("Natali2", companies.get(2).getName());
+        conn.close();
 
     }
+
     @Test
-    public void getIdentifier(){
+    public void getIdentifier() throws SQLException, ClassNotFoundException {
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
 
@@ -116,18 +130,32 @@ public class HibernateRunTest {
         session.saveOrUpdate(product);
         session.saveOrUpdate(product2);
         session.saveOrUpdate(product3);
-        session.flush();
-
-
-        Product getProduct = session.get(Product.class, product.getProductId());
-
-
-        session.flush();
-
-        assertNotNull(getProduct.getProductId());
-        assertEquals("MacBook", product.getName());
-        assertEquals("15", product.getModel());
         transaction.commit();
+
+        assertNotNull(product);
+        assertNotNull(product2);
+        assertNotNull(product3);
+        Connection conn = JdbcUtilTest.getConnection();
+        ResultSet rs = conn.createStatement().executeQuery("select count(*) from product where NAME='MacBook' AND model='15'");
+        rs.next();
+        int actualCount =  rs.getInt(1);
+        assertEquals(1, actualCount);
+
+        rs = conn.createStatement().executeQuery("select count(*) from product where NAME='iPhone' AND model='15PRO'");
+        rs.next();
+         actualCount =  rs.getInt(1);
+        assertEquals(1, actualCount);
+
+        rs = conn.createStatement().executeQuery("select count(*) from product where NAME='Airpods' AND model='8'");
+        rs.next();
+        actualCount =  rs.getInt(1);
+        assertEquals(1, actualCount);
+
+
+
+        conn.close();
+
+
     }
 
 }

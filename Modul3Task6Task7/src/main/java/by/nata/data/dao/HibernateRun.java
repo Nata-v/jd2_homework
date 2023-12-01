@@ -105,10 +105,10 @@ public class HibernateRun implements Dao {
 
 
     @Override
-    public List<Object> findAll() {
+    public List<Company> findAll() {
         Session session = null;
         Transaction transaction = null;
-        List<Object> resultList = new ArrayList<>();
+        List<Company> resultList = new ArrayList<>();
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
@@ -119,12 +119,6 @@ public class HibernateRun implements Dao {
                 System.out.println("Company id: " + company);
             }
 
-
-            List<Employee> employees = session.createQuery("from Employee").list();
-            for (Employee employee : employees) {
-                resultList.add(employee);
-                System.out.println("Employee id: " + employee);
-            }
             transaction.commit();
 
         } catch (Exception e) {
