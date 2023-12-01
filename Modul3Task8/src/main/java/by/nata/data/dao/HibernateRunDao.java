@@ -45,7 +45,6 @@ public class HibernateRunDao implements Dao {
             session.save(employee3);
 
             session.flush();
-            session.clear();
 
             transaction.commit();
 
@@ -86,7 +85,6 @@ public class HibernateRunDao implements Dao {
             session.save(employee3);
 
             session.flush();
-            session.clear();
 
             transaction.commit();
 
@@ -128,7 +126,6 @@ public class HibernateRunDao implements Dao {
             session.save(employee3);
 
             session.flush();
-            session.clear();
 
             transaction.commit();
 
@@ -199,15 +196,9 @@ public class HibernateRunDao implements Dao {
             Student student = session.get(Student.class, 2L);
             Employee employee = session.get(Employee.class, 5L);
 
-            SingleTableEmployee singleTableEmployee = session.get(SingleTableEmployee.class, 2L);
-
-            JoinedTableEmployee joinedTableEmployee = session.get(JoinedTableEmployee.class, 1L);
             session.flush();
             System.out.println(student);
             System.out.println(employee);
-            System.out.println(singleTableEmployee);
-            System.out.println(joinedTableEmployee);
-
             transaction.commit();
 
         } catch (Exception e) {

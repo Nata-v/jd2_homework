@@ -2,6 +2,7 @@ package by.nata.data.dao;
 
 
 import by.nata.data.HibernateUtilTest;
+import by.nata.data.JdbcUtilTest;
 import by.nata.data.pojo.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +11,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,13 +26,20 @@ public class HibernateRunDaoTest {
     private static SessionFactory sessionFactory;
     private Session session = null;
     private Transaction transaction = null;
-
+private static Dao dao;
 
     @Before
     public void setUp() throws Exception {
+        Connection conn = JdbcUtilTest.getConnection();
 
         sessionFactory = HibernateUtilTest.getSessionFactory();
         sessionFactory.openSession();
+        conn.createStatement().executeUpdate("DELETE FROM person_employee_student;");
+        conn.createStatement().executeUpdate("DELETE FROM student;");
+        conn.createStatement().executeUpdate("DELETE FROM employee;");
+        conn.createStatement().executeUpdate("DELETE FROM student_join;");
+        conn.createStatement().executeUpdate("DELETE FROM employee_join;");
+        conn.createStatement().executeUpdate("DELETE FROM person_join;");
 
     }
 
@@ -39,10 +49,19 @@ public class HibernateRunDaoTest {
         if (sessionFactory == null) {
             sessionFactory.close();
         }
+        dao = null;
+        Connection conn = JdbcUtilTest.getConnection();
+        conn.createStatement().executeUpdate("DELETE FROM person_employee_student;");
+        conn.createStatement().executeUpdate("DELETE FROM student;");
+        conn.createStatement().executeUpdate("DELETE FROM employee;");
+        conn.createStatement().executeUpdate("DELETE FROM student_join;");
+        conn.createStatement().executeUpdate("DELETE FROM employee_join;");
+        conn.createStatement().executeUpdate("DELETE FROM person_join;");
+
     }
 
     @Test
-    public void testSaveInSingleTable() {
+    public void testSaveInSingleTable() throws SQLException, ClassNotFoundException {
 
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
@@ -66,18 +85,22 @@ public class HibernateRunDaoTest {
 
         transaction.commit();
 
+        assertNotNull(student1);
+        assertNotNull(employee1);
 
-        assertNotNull(employee1.getId());
-        assertEquals("Natali", employee1.getName());
-        assertEquals("Volkova", employee1.getSurname());
-        assertEquals("Google", employee1.getCompany());
-        assertEquals(5000.00, employee1.getSalary(), 0.001);
+        Connection conn = JdbcUtilTest.getConnection();
+
+        ResultSet rs = conn.createStatement().executeQuery("select count(*) from person_employee_student");
+        rs.next();
+        int actualCount = rs.getInt(1);
+        assertEquals(6, actualCount);
+        conn.close();
 
 
     }
 
     @Test
-    public void testSaveInJoinedTable() {
+    public void testSaveInJoinedTable() throws SQLException, ClassNotFoundException {
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
 
@@ -88,15 +111,21 @@ public class HibernateRunDaoTest {
         session.save(employee1);
 
         transaction.commit();
-        assertNotNull(employee1.getId());
-        assertEquals("Natali", employee1.getName());
-        assertEquals("Volkova", employee1.getSurname());
-        assertEquals("Google", employee1.getCompany());
-        assertEquals(5000.00, employee1.getSalary(), 0.001);
+
+        assertNotNull(student1);
+        assertNotNull(employee1);
+
+        Connection conn = JdbcUtilTest.getConnection();
+
+        ResultSet rs = conn.createStatement().executeQuery("select count(*) from person_join");
+        rs.next();
+        int actualCount = rs.getInt(1);
+        assertEquals(2, actualCount);
+        conn.close();
     }
 
     @Test
-    public void testSaveInTablePerClass() {
+    public void testSaveInTablePerClass()  {
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
 
@@ -107,11 +136,15 @@ public class HibernateRunDaoTest {
         session.save(employee1);
 
         transaction.commit();
-        assertNotNull(employee1.getId());
-        assertEquals("Natali", employee1.getName());
-        assertEquals("Volkova", employee1.getSurname());
-        assertEquals("Google", employee1.getCompany());
-        assertEquals(5000.00, employee1.getSalary(), 0.001);
+
+        assertNotNull(student1);
+        assertNotNull(employee1);
+
+        session = sessionFactory.openSession();
+        List<Person> people = session.createQuery("SELECT p FROM Person p", Person.class).getResultList();
+
+        assertEquals(2, people.size());
+
     }
 
     @Test
@@ -122,10 +155,10 @@ public class HibernateRunDaoTest {
         transaction = session.beginTransaction();
         Student student1 = new Student(null, "John", "Smith", "Engineer-Programmer", 9.5);
         session.save(student1);
-
-        List<Student> students = session.createQuery("from Student").list();
-
         transaction.commit();
+
+        session = sessionFactory.openSession();
+        List<Student> students = session.createQuery("from Student").list();
         for (Student student : students) {
             resultList.add(student);
             System.out.println(resultList);
@@ -137,27 +170,39 @@ public class HibernateRunDaoTest {
     }
 
     @Test
-    public void testGetById() {
+    public void testGetById() throws SQLException, ClassNotFoundException {
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
         Student student = new Student(null, "John", "Smith", "Engineer-Programmer", 9.5);
         session.save(student);
-
-        Student studentGet = session.get(Student.class, 1L);
         transaction.commit();
-        assertNotNull(studentGet.getId());
-        assertEquals("John", studentGet.getName());
 
+        assertNotNull(student);
+
+        Connection conn = JdbcUtilTest.getConnection();
+        ResultSet rs = conn.createStatement().executeQuery("select count(*) from student where NAME='John' AND SURNAME='Smith'");
+        rs.next();
+        int actualCount =  rs.getInt(1);
+        assertEquals(1, actualCount);
+
+
+        session = sessionFactory.openSession();
         transaction = session.beginTransaction();
 
         SingleTableEmployee employee1 = new SingleTableEmployee(null, "Natali", "Volkova", "Google", 5000.00);
         session.save(employee1);
+        transaction.commit();
 
+        assertNotNull(employee1);
+
+
+        session = sessionFactory.openSession();
         SingleTableEmployee employee = session.get(SingleTableEmployee.class, 1L);
         System.out.println(employee);
-        transaction.commit();
+
 
         assertNotNull(employee.getId());
         assertEquals("Natali", employee.getName());
+        conn.close();
     }
 }

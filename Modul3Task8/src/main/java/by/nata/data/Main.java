@@ -12,7 +12,7 @@ public class Main {
 
         hibernateRunDao.saveInTablePerClass(new Object());
         hibernateRunDao.findAll();
-        hibernateRunDao.getById(1L);
+        hibernateRunDao.getById(5L);
 hibernateRunDao.saveInSingleTable(new Object());
 hibernateRunDao.saveInJoinedTable(new Object());
 
