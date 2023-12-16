@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="1" author="nata">
+        <sql>
+            CREATE TABLE IF NOT EXISTS company (
+            id VARCHAR(256) NOT NULL PRIMARY KEY ,
+            name VARCHAR(256) NOT NULL,
+            created_date DATE NOT NULL
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="nata">
+        <sql>
+            CREATE TABLE IF NOT EXISTS employee (
+            id VARCHAR(256) PRIMARY KEY ,
+            first_name VARCHAR(128) NOT NULL,
+            last_name VARCHAR(128) NOT NULL,
+            salary DECIMAL(10,2) NOT NULL,
+            company_id VARCHAR(256) NOT NULL,
+            FOREIGN KEY (company_id) REFERENCES company (id)
+            );
+        </sql>
+    </changeSet>
+
+
+
+<!--    <changeSet id="5" author="nata">-->
+<!--        <sql>-->
+<!--            insert into company ( name, created_date) values ( 'TikTok', '1960-10-10');-->
+<!--            insert into company ( name, created_date) values ( 'Google', '2023-03-24');-->
+<!--            insert into company (name, created_date) values ( 'Apple', '2001-01-10');-->
+<!--            insert into company (name, created_date) values ( 'Microsoft', '2024-05-10');-->
+<!--        </sql>-->
+<!--    </changeSet>-->
+
+
+
+
+</databaseChangeLog>

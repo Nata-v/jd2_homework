@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd"
+       default-init-method="initMethod" default-destroy-method="destroyMethod">
+
+    <context:property-placeholder location="classpath:liquibase.properties"/>
+    <context:annotation-config/>
+
+    <context:component-scan base-package="by.nata.xml">
+        <context:include-filter type="assignable" expression="by.nata.xml.entity.Company"/>
+    </context:component-scan>
+
+    <bean id="company" class="by.nata.xml.entity.Company" factory-method="createCompany" init-method="init"
+          destroy-method="destroy">
+        <property name="name" value="TikTok"/>
+    </bean>
+
+
+    <bean id="employee" class="by.nata.xml.entity.Employee">
+        <constructor-arg name="id" value="null"/>
+        <constructor-arg name="first_name" value="Natali"/>
+        <constructor-arg name="last_name" value="Volkova"/>
+        <constructor-arg name="salary" value="5000.00"/>
+        <constructor-arg name="company" ref="company"/>
+        <constructor-arg name="contactEmployee" ref="contactEmployee"/>
+    </bean>
+
+    <bean id="contactEmployee" class="by.nata.xml.entity.ContactEmployee">
+        <property name="number" value="375296183716"/>
+        <property name="type" value="Домашний"/>
+    </bean>
+
+    <bean name="companyDto" class="by.nata.xml.dto.CompanyDto" scope="prototype"/>
+
+    <bean name="companyMapper" class="by.nata.xml.mapper.CompanyMapper">
+        <constructor-arg ref="companyDto"/>
+    </bean>
+
+    <bean name="companyService" class="by.nata.xml.service.CompanyService">
+        <constructor-arg name="company" ref="company"/>
+        <constructor-arg name="companyMapper" ref="companyMapper"/>
+    </bean>
+
+</beans>
+
+
+
+
+
