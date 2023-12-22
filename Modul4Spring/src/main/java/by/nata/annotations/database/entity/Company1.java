@@ -1,9 +1,7 @@
 package by.nata.annotations.database.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+
 
 
 import javax.persistence.*;
@@ -13,7 +11,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "company")
-@Component
 
 public class Company1 implements Serializable {
     private static final long serialVersionUID = -4241885064074994957L;

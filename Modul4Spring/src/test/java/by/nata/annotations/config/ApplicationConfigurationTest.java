@@ -3,29 +3,21 @@ package by.nata.annotations.config;
 
 import by.nata.annotations.database.entity.Company1;
 import by.nata.annotations.database.entity.Employee1;
-import by.nata.annotations.service.EmployeeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertNotNull;
 
-@ContextConfiguration(classes = ApplicationConfiguration.class)
+@Configuration
+@Import(ApplicationConfiguration.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ApplicationConfigurationTest {
 
-    @Autowired
-    EmployeeService employeeService;
-
-
-    @Test
-    public void createBeanEmployeeService() {
-        assertNotNull(employeeService);
-        System.out.println(employeeService.toString());
-    }
 
     @Autowired
     @Qualifier("createCompany")

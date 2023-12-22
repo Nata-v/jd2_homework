@@ -8,9 +8,9 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
+
 @Embeddable
-@Component
+
 
 public class CompanyAddress1 implements Serializable {
 

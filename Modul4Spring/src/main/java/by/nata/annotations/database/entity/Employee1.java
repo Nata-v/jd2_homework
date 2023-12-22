@@ -1,9 +1,7 @@
 package by.nata.annotations.database.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "employee")
-@Component
+
 public class Employee1 implements Serializable {
     private static final long serialVersionUID = 3372325038143361541L;
     @Id
@@ -28,8 +26,7 @@ public class Employee1 implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
-    @Autowired
-    @Qualifier("createCompany2")
+
     private Company1 company;
 
     @Embedded

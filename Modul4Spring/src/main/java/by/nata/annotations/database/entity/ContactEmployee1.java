@@ -8,9 +8,9 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
+
 @Embeddable
-@Component
+
 public class ContactEmployee1 implements Serializable {
     private static final long serialVersionUID = -9132807096018160850L;
     @Column(name = "number")

@@ -10,9 +10,10 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Component
-@Scope(scopeName = "prototype")
 public  class EmployeeDto implements Serializable {
+    public EmployeeDto() {
+    }
+
     @Override
     public String toString() {
         return "EmployeeDto{}";
