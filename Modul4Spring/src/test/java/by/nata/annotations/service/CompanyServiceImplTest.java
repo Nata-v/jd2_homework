@@ -1,6 +1,7 @@
 package by.nata.annotations.service;
 
 import by.nata.annotations.config.ApplicationConfiguration;
+import by.nata.annotations.config.ApplicationConfigurationTest;
 import by.nata.annotations.database.dao.CompanyDao;
 import by.nata.annotations.database.entity.Company1;
 import by.nata.annotations.database.entity.CompanyAddress1;
@@ -21,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
-@ContextConfiguration(classes = ApplicationConfiguration.class)
+@ContextConfiguration(classes = ApplicationConfigurationTest.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CompanyServiceImplTest {
     private static final String COMPANY_ID = "1";

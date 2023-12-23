@@ -2,6 +2,7 @@ package by.nata.annotations.service;
 
 import by.nata.annotations.database.dao.CompanyDao;
 import by.nata.annotations.database.entity.Company1;
+import by.nata.annotations.database.entity.NewCompany;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,10 @@ public class CompanyServiceImpl implements CompanyService{
 
     @Autowired
     @Qualifier("createCompany2")
-    private final Company1 company;
+    private final NewCompany company;
 
 
-    public CompanyServiceImpl(CompanyDao companyDao, Company1 company) {
+    public CompanyServiceImpl(CompanyDao companyDao, NewCompany company) {
         this.companyDao = companyDao;
         this.company = company;
     }

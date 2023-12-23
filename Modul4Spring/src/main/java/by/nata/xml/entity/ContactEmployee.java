@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
+
 @Embeddable
 public class ContactEmployee implements Serializable {
     private static final long serialVersionUID = -3200572993909694759L;
@@ -23,13 +23,6 @@ public class ContactEmployee implements Serializable {
         this.type = type;
     }
 
-    public void initMethod(){
-        System.out.println("Init ContactEmployee");
-    }
-
-    public void destroyMethod(){
-        System.out.println("Destroy ContactEmployee");
-    }
 
     public String getNumber() {
         return number;

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+http://www.springframework.org/schema/util/spring-util.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd"
        default-init-method="initMethod" default-destroy-method="destroyMethod">
@@ -13,38 +16,65 @@
     <context:annotation-config/>
 
     <context:component-scan base-package="by.nata.xml">
-        <context:include-filter type="assignable" expression="by.nata.xml.entity.Company"/>
+        <context:include-filter type="assignable" expression="by.nata.xml.entity.Accounts"/>
     </context:component-scan>
 
-    <bean id="company" class="by.nata.xml.entity.Company" factory-method="createCompany" init-method="init"
+    <bean id="user" class="by.nata.xml.entity.User" factory-method="createUser" init-method="init"
           destroy-method="destroy">
-        <property name="name" value="TikTok"/>
+        <constructor-arg name="id" value="1"/>
+        <constructor-arg name="username" value="nata"/>
+        <constructor-arg name="password" value="nata777"/>
     </bean>
 
 
-    <bean id="employee" class="by.nata.xml.entity.Employee">
-        <constructor-arg name="id" value="null"/>
-        <constructor-arg name="first_name" value="Natali"/>
-        <constructor-arg name="last_name" value="Volkova"/>
-        <constructor-arg name="salary" value="5000.00"/>
-        <constructor-arg name="company" ref="company"/>
-        <constructor-arg name="contactEmployee" ref="contactEmployee"/>
-    </bean>
+<!--    <bean id="accounts" class="by.nata.xml.entity.Accounts">-->
+<!--        <constructor-arg name="id" value="1"/>-->
+<!--        <constructor-arg name="accountNumber" value="567890432"/>-->
+<!--        <constructor-arg name="amount" value="5000.00"/>-->
+<!--        <constructor-arg name="createdDate" value="23/12/25 13:00:20"/>-->
+<!--    </bean>-->
 
-    <bean id="contactEmployee" class="by.nata.xml.entity.ContactEmployee">
-        <property name="number" value="375296183716"/>
-        <property name="type" value="Домашний"/>
-    </bean>
 
-    <bean name="companyDto" class="by.nata.xml.dto.CompanyDto" scope="prototype"/>
 
     <bean name="companyMapper" class="by.nata.xml.mapper.CompanyMapper">
-        <constructor-arg ref="companyDto"/>
+
     </bean>
 
-    <bean name="companyService" class="by.nata.xml.service.CompanyService">
-        <constructor-arg name="company" ref="company"/>
+    <bean name="companyDao" class="by.nata.xml.dao.CompanyDaoImpl" init-method="init"
+          destroy-method="destroy">
+        <constructor-arg ref="sessionFactory"/>
+    </bean>
+
+
+
+    <bean name="companyServiceImpl" class="by.nata.xml.service.CompanyServiceImpl">
         <constructor-arg name="companyMapper" ref="companyMapper"/>
+        <constructor-arg name="companyDao" ref="companyDao"/>
+    </bean>
+
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+        <property name="jdbcUrl"
+                  value="jdbc:mysql://localhost:3306/Companies?createDatabaseIfNotExist=true"/>
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="username" value="user"/>
+        <property name="password" value="user"/>
+    </bean>
+
+
+    <bean id="sessionFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="by.nata.xml"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">false</prop>
+            </props>
+        </property>
     </bean>
 
 </beans>

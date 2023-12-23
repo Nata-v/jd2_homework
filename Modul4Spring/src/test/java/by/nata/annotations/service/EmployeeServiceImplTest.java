@@ -1,6 +1,7 @@
 package by.nata.annotations.service;
 
 import by.nata.annotations.config.ApplicationConfiguration;
+import by.nata.annotations.config.ApplicationConfigurationTest;
 import by.nata.annotations.database.dao.CompanyDao;
 import by.nata.annotations.database.dao.EmployeeDao;
 import by.nata.annotations.database.entity.Company1;
@@ -24,7 +25,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-@ContextConfiguration(classes = ApplicationConfiguration.class)
+@ContextConfiguration(classes = ApplicationConfigurationTest.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class EmployeeServiceImplTest {
 

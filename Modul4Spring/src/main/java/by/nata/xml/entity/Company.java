@@ -35,17 +35,9 @@ public class Company implements Serializable {
         this.created_date = created_date;
     }
 
-    public static Company createCompany(){
-        return  new Company();
-    }
 
-    public void init(){
-        System.out.println("Init Company");
-    }
 
-    public void destroy(){
-        System.out.println("Destroy Company");
-    }
+
 
     public String getId() {
         return id;
