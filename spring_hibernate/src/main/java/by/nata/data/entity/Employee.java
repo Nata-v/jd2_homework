@@ -19,29 +19,30 @@ public class Employee {
     @Column(name = "first_name")
     private String first_name;
     @Column(name = "last_name")
+   // @NotBlank(message = "Last name cannot be empty")
     private String last_name;
     @Column(name = "salary")
     private double salary;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
-    @Autowired
-    @Qualifier("createCompany2")
+
+    //@Qualifier("createCompany2")
     private Company company;
 
-    @Embedded
-    private ContactEmployee contactEmployee;
+//    @Embedded
+//    private ContactEmployee contactEmployee;
 
     public Employee() {
     }
 
-    public Employee(String id, String first_name, String last_name, double salary, Company company, ContactEmployee contactEmployee) {
+    public Employee(String id, String first_name, String last_name, double salary, Company company) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.salary = salary;
         this.company = company;
-        this.contactEmployee = contactEmployee;
+       // this.contactEmployee = contactEmployee;
     }
 
     public String getId() {
@@ -84,36 +85,23 @@ public class Employee {
         this.company = company;
     }
 
-    public ContactEmployee getContactEmployee() {
-        return contactEmployee;
-    }
-
-    public void setContactEmployee1(ContactEmployee contactEmployee) {
-        this.contactEmployee = contactEmployee;
-    }
+//    public ContactEmployee getContactEmployee() {
+//        return contactEmployee;
+//    }
+//
+//    public void setContactEmployee(ContactEmployee contactEmployee) {
+//        this.contactEmployee = contactEmployee;
+//    }
 
     @Override
     public boolean equals(Object object) {
-
         if (this == object) return true;
         if (!(object instanceof Employee employee)) return false;
-        return Double.compare(employee.getSalary(), getSalary()) == 0 && Objects.equals(getId(), employee.getId()) && Objects.equals(getFirst_name(), employee.getFirst_name()) && Objects.equals(getLast_name(), employee.getLast_name()) && Objects.equals(getCompany(), employee.getCompany()) && Objects.equals(getContactEmployee(), employee.getContactEmployee());
+        return Double.compare(employee.getSalary(), getSalary()) == 0 && Objects.equals(getId(), employee.getId()) && Objects.equals(getFirst_name(), employee.getFirst_name()) && Objects.equals(getLast_name(), employee.getLast_name()) && Objects.equals(getCompany(), employee.getCompany());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirst_name(), getLast_name(), getSalary(), getCompany(), getContactEmployee());
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id='" + id + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", salary=" + salary +
-                ", company=" + company +
-                ", contactEmployee=" + contactEmployee +
-                '}';
+        return Objects.hash(getId(), getFirst_name(), getLast_name(), getSalary(), getCompany());
     }
 }

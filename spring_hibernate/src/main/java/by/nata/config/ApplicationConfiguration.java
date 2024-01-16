@@ -17,6 +17,12 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -27,7 +33,38 @@ import java.util.Properties;
         "classpath:hibernate.properties"
 })
 @EnableTransactionManagement
+//@EnableWebMvc
 public class ApplicationConfiguration {
+
+//    @Bean
+//    @SuppressWarnings("unused")
+//    public InternalResourceViewResolver internalResourceViewResolver(){
+//
+//        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//        resolver.setPrefix("/WEB-INF/jsp/");
+//        resolver.setSuffix(".jsp");
+//        //resolver.setSuffix(".html");
+//        return resolver;
+//
+//    }
+//
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry
+//                .addResourceHandler("*.html")
+//                .addResourceLocations("/");
+//        registry.addResourceHandler("/static/img/*.jpg")
+//                .addResourceLocations("/static/img/");
+//    }
+
+
+
+
+    @Bean
+    @SuppressWarnings("unused")
+    public MultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
+    }
     @Bean
     public Properties hibernateProperties(
             @Value("${hibernate.show_sql}") String showSql,

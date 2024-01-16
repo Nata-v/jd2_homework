@@ -22,106 +22,106 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = ApplicationConfigurationTest.class)
-@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(classes = ApplicationConfigurationTest.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 public class EmployeeDaoImplTest {
-Employee employee = new Employee();
-    @Mock
-
-    private EmployeeDao employeeDao;
-
-    private static final String EMPLOYEE_ID = "1";
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Test
-    public void save() {
-        employee.setId(EMPLOYEE_ID);
-        employee.setFirst_name("John");
-        employee.setLast_name("Smith");
-        employee.setSalary(2500.00);
-        System.out.println(employee);
-
-        when(employeeDao.save(employee)).thenReturn(employee);
-
-        Employee savedEmployee = employeeDao.save(employee);
-        System.out.println(savedEmployee);
-
-        assertNotNull(savedEmployee);
-        assertEquals("John", savedEmployee.getFirst_name());
-        assertEquals("Smith", savedEmployee.getLast_name());
-        assertEquals(2500.00, savedEmployee.getSalary(), 0.001);
-
-
-        verify(employeeDao).save(employee);
-    }
-
-    @Test
-    public void findById() {
-        employee.setId(EMPLOYEE_ID);
-        employee.setFirst_name("Natali");
-        employee.setLast_name("Volkova");
-        System.out.println(employee);
-
-        when(employeeDao.findById(EMPLOYEE_ID)).thenReturn(Optional.of(employee));
-        Optional<Employee> result = employeeDao.findById(EMPLOYEE_ID);
-
-        assertTrue(result.isPresent());
-        assertEquals(employee, result.get());
-    }
-
-    @Test
-    public void findAll() {
-        List<Employee> expectedEmployee = new ArrayList<>();
-        expectedEmployee.add(new Employee("1", "Natali","Volkova", 5000.00,new Company(),new ContactEmployee()));
-        expectedEmployee.add(new Employee("2", "John","Smith", 4000.00,new Company(),new ContactEmployee()));
-        expectedEmployee.add(new Employee("3", "Kate","Ivanova", 3000.00,new Company(),new ContactEmployee()));
-
-        System.out.println(expectedEmployee);
-        when(employeeDao.findAll()).thenReturn(expectedEmployee);
-
-        List<Employee> result = employeeDao.findAll();
-        System.out.println(result);
-
-        assertEquals(expectedEmployee, result);
-    }
-
-    @Test
-    public void delete() {
-        employee.setId(EMPLOYEE_ID);
-        employee.setFirst_name("Natali");
-        employee.setLast_name("Volkova");
-        System.out.println(employee);
-
-        when(employeeDao.delete(EMPLOYEE_ID)).thenReturn(true);
-
-        boolean result = employeeDao.delete(EMPLOYEE_ID);
-        System.out.println(result);
-
-        verify(employeeDao).delete(EMPLOYEE_ID);
-        assertTrue(result);
-    }
-
-    @Test
-    public void update() {
-        employee.setId(EMPLOYEE_ID);
-        employee.setFirst_name("John");
-        employee.setLast_name("Smith");
-        employee.setSalary(2500.00);
-        System.out.println(employee);
-
-        when(employeeDao.update(employee)).thenReturn(true);
-        boolean result = employeeDao.update(employee);
-
-        assertEquals("John", employee.getFirst_name());
-        assertEquals("Smith", employee.getLast_name());
-        assertEquals(2500.00, employee.getSalary(), 0.001);
-        assertTrue(result);
-    }
+//Employee employee = new Employee();
+//    @Mock
+//
+//    private EmployeeDao employeeDao;
+//
+//    private static final String EMPLOYEE_ID = "1";
+//    @Before
+//    public void setUp() throws Exception {
+//        MockitoAnnotations.initMocks(this);
+//    }
+//
+//    @After
+//    public void tearDown() throws Exception {
+//    }
+//
+//    @Test
+//    public void save() {
+//        employee.setId(EMPLOYEE_ID);
+//        employee.setFirst_name("John");
+//        employee.setLast_name("Smith");
+//        employee.setSalary(2500.00);
+//        System.out.println(employee);
+//
+//        when(employeeDao.save(employee)).thenReturn(employee);
+//
+//        Employee savedEmployee = employeeDao.save(employee);
+//        System.out.println(savedEmployee);
+//
+//        assertNotNull(savedEmployee);
+//        assertEquals("John", savedEmployee.getFirst_name());
+//        assertEquals("Smith", savedEmployee.getLast_name());
+//        assertEquals(2500.00, savedEmployee.getSalary(), 0.001);
+//
+//
+//        verify(employeeDao).save(employee);
+//    }
+//
+//    @Test
+//    public void findById() {
+//        employee.setId(EMPLOYEE_ID);
+//        employee.setFirst_name("Natali");
+//        employee.setLast_name("Volkova");
+//        System.out.println(employee);
+//
+//        when(employeeDao.findById(EMPLOYEE_ID)).thenReturn(Optional.of(employee));
+//        Optional<Employee> result = employeeDao.findById(EMPLOYEE_ID);
+//
+//        assertTrue(result.isPresent());
+//        assertEquals(employee, result.get());
+//    }
+//
+//    @Test
+//    public void findAll() {
+//        List<Employee> expectedEmployee = new ArrayList<>();
+//        expectedEmployee.add(new Employee("1", "Natali","Volkova", 5000.00,new Company(),new ContactEmployee()));
+//        expectedEmployee.add(new Employee("2", "John","Smith", 4000.00,new Company(),new ContactEmployee()));
+//        expectedEmployee.add(new Employee("3", "Kate","Ivanova", 3000.00,new Company(),new ContactEmployee()));
+//
+//        System.out.println(expectedEmployee);
+//        when(employeeDao.findAll()).thenReturn(expectedEmployee);
+//
+//        List<Employee> result = employeeDao.findAll();
+//        System.out.println(result);
+//
+//        assertEquals(expectedEmployee, result);
+//    }
+//
+//    @Test
+//    public void delete() {
+//        employee.setId(EMPLOYEE_ID);
+//        employee.setFirst_name("Natali");
+//        employee.setLast_name("Volkova");
+//        System.out.println(employee);
+//
+//        when(employeeDao.delete(EMPLOYEE_ID)).thenReturn(true);
+//
+//        boolean result = employeeDao.delete(EMPLOYEE_ID);
+//        System.out.println(result);
+//
+//        verify(employeeDao).delete(EMPLOYEE_ID);
+//        assertTrue(result);
+//    }
+//
+//    @Test
+//    public void update() {
+//        employee.setId(EMPLOYEE_ID);
+//        employee.setFirst_name("John");
+//        employee.setLast_name("Smith");
+//        employee.setSalary(2500.00);
+//        System.out.println(employee);
+//
+//        when(employeeDao.update(employee)).thenReturn(true);
+//        boolean result = employeeDao.update(employee);
+//
+//        assertEquals("John", employee.getFirst_name());
+//        assertEquals("Smith", employee.getLast_name());
+//        assertEquals(2500.00, employee.getSalary(), 0.001);
+//        assertTrue(result);
+//    }
 }

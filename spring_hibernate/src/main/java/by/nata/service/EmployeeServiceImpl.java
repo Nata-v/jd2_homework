@@ -1,7 +1,14 @@
 package by.nata.service;
 
 import by.nata.data.dao.EmployeeDao;
+import by.nata.data.entity.Company;
+import by.nata.data.entity.CompanyAddress;
+import by.nata.data.entity.ContactEmployee;
 import by.nata.data.entity.Employee;
+import by.nata.dto.CompanyAddressDto;
+import by.nata.dto.CompanyDto;
+import by.nata.dto.ContactEmployeeDto;
+import by.nata.dto.EmployeeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,10 +28,36 @@ private final EmployeeDao employeeDao;
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Employee saveEmployee(Employee employee) {
+    public Employee saveEmployee(EmployeeDto employeeDto, CompanyDto companyDto) {
+//CompanyAddress companyAddress = new CompanyAddress(
+//       // companyAddressDto.getCity(),
+//        companyAddressDto.getStreet(),
+//        companyAddressDto.getPostCode()
+//);
+        Company company = new Company(
+                companyDto.getId(),
+                companyDto.getName(),
+                companyDto.getCreated_date()
+               // companyAddress
+        );
 
-        return employeeDao.save(employee);
+//        ContactEmployee contactEmployee = new ContactEmployee(
+//                contactEmployeeDto.getNumber(),
+//                contactEmployeeDto.getType()
+//        );
+
+        Employee employee = new Employee(
+                employeeDto.getId(),
+                employeeDto.getFirst_name(),
+                employeeDto.getLast_name(),
+                employeeDto.getSalary(),
+                company
+               // contactEmployee
+        );
+
+        employeeDao.save(employee);
+        return employee;
+
     }
 
     @Override

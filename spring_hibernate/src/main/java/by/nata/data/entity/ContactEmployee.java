@@ -5,7 +5,7 @@ import jakarta.persistence.Embeddable;
 
 import java.util.Objects;
 
-@Embeddable
+//@Embeddable
 public class ContactEmployee {
     @Column(name = "number")
     private String number;

@@ -9,18 +9,21 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
-public final class EmployeeDto implements Serializable {
-    private final String id;
+public  class EmployeeDto implements Serializable {
+    private  String id;
 
-    private final String first_name;
+    private  String first_name;
 
-    private final String last_name;
+    private  String last_name;
 
-    private final double salary;
+    private double salary;
 
-    private final Company company;
+    private  Company company;
 
-    private final ContactEmployee contactEmployee;
+    private  ContactEmployee contactEmployee;
+
+    public EmployeeDto() {
+    }
 
     public EmployeeDto(String id, String first_name, String last_name, double salary, Company company, ContactEmployee contactEmployee) {
         this.id = id;
@@ -53,5 +56,29 @@ public final class EmployeeDto implements Serializable {
 
     public ContactEmployee getContactEmployee() {
         return contactEmployee;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public void setContactEmployee(ContactEmployee contactEmployee) {
+        this.contactEmployee = contactEmployee;
     }
 }

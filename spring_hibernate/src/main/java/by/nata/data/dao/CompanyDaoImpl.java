@@ -2,18 +2,22 @@ package by.nata.data.dao;
 
 import by.nata.data.entity.Company;
 import by.nata.data.entity.CompanyAddress;
+import by.nata.dto.CompanyAddressDto;
+import by.nata.dto.CompanyDto;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Transactional
 public class CompanyDaoImpl implements CompanyDao {
     private final SessionFactory sessionFactory;
 
@@ -26,23 +30,30 @@ public class CompanyDaoImpl implements CompanyDao {
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public Company save(Company company) {
-        if (company == null) {
-            throw new IllegalArgumentException("Object can't be null");
-        }
-        Session session = null;
-        session = sessionFactory.getCurrentSession();
+//    @Override
+//    public Company save(CompanyDto companyDto, CompanyAddressDto companyAddressDto) {
+//        if (companyDto == null) {
+//            throw new IllegalArgumentException("Object can't be null");
+//        }
+//
+//       Session session = sessionFactory.getCurrentSession();
+////        Company company = new Company(null, "Microsoft", LocalDate.of(2024, 05, 10),
+////                new CompanyAddress("Moscow", "Arbat", "1111"));
+//
+//        Company company = new Company(companyDto.getId() == null ? getMaxProductId() + 1 : companyDto.getId(),
+//                companyDto.getName(),
+//                companyDto.getCreated_date(),
+//                new CompanyAddress(companyAddressDto.getCity(),
+//                        companyAddressDto.getStreet(),
+//                        companyAddressDto.getPostCode())
+//                );
+//        session.saveOrUpdate(company);
+//
+//        session.flush();
+//
+//        return company;
+//    }
 
-        company = new Company(null, "Microsoft", LocalDate.of(2024, 05, 10),
-                new CompanyAddress("Moscow", "Arbat", "1111"));
-
-        session.saveOrUpdate(company);
-
-        session.flush();
-
-        return company;
-    }
 
 
     @Override

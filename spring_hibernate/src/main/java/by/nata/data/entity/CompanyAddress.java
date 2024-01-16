@@ -1,20 +1,23 @@
 package by.nata.data.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 import java.util.Objects;
 
-@Embeddable
+//@Embeddable
 public class CompanyAddress {
+    @Column(name = "city")
     private String city;
+    @Column(name = "street")
     private String street;
-
+@Column(name = "postCode")
     private String postCode;
 
     public CompanyAddress() {
     }
 
-    public CompanyAddress(String city, String street, String postCode) {
+    public CompanyAddress( String city,String street, String postCode) {
         this.city = city;
         this.street = street;
         this.postCode = postCode;
@@ -44,24 +47,5 @@ public class CompanyAddress {
         this.postCode = postCode;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof CompanyAddress that)) return false;
-        return Objects.equals(getCity(), that.getCity()) && Objects.equals(getStreet(), that.getStreet()) && Objects.equals(getPostCode(), that.getPostCode());
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getCity(), getStreet(), getPostCode());
-    }
-
-    @Override
-    public String toString() {
-        return "CompanyAddress{" +
-                "city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                ", postCode='" + postCode + '\'' +
-                '}';
-    }
 }

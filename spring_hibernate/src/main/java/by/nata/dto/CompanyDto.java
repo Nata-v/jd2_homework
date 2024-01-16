@@ -7,16 +7,20 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public final class CompanyDto implements Serializable {
-    private final String id;
+public  class CompanyDto implements Serializable {
+    private  String id;
 
 
-    private final String name;
+    private  String name;
 
-    private final LocalDate created_date;
+    private  LocalDate created_date;
 
 
-    private final CompanyAddress companyAddress;
+    private  CompanyAddress companyAddress;
+
+
+    public CompanyDto() {
+    }
 
     public CompanyDto(String id, String name, LocalDate created_date, CompanyAddress companyAddress) {
         this.id = id;
@@ -37,7 +41,24 @@ public final class CompanyDto implements Serializable {
         return created_date;
     }
 
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCreated_date(LocalDate created_date) {
+        this.created_date = created_date;
+    }
+
     public CompanyAddress getCompanyAddress() {
         return companyAddress;
+    }
+
+    public void setCompanyAddress(CompanyAddress companyAddress) {
+        this.companyAddress = companyAddress;
     }
 }
